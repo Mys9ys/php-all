@@ -7,6 +7,7 @@ use core\base\settings\Settings;
 class SiteSettings extends Settings
 {
     static private $_instance;
+    private $baseSettings;
 
     private $templateArr = [
         'text' => ['price', 'short'],
