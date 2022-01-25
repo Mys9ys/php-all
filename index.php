@@ -11,7 +11,9 @@ require_once 'lib/functions.php';
 
 use core\base\controller\RouteController;
 use core\base\exceptions\RouteException;
+$arr = [1,2,3];
 
+print_debug($arr);
 try{
     RouteController::getInstance()->route();
 //    RouteController::getInstance();
@@ -20,6 +22,3 @@ catch (RouteException $e){
     exit($e->getMessage());
 }
 
-$arr = [1,2,3];
-
-print_debug($arr);
