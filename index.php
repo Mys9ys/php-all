@@ -15,7 +15,7 @@ $arr = [1,2,3];
 
 print_debug($arr);
 try{
-    RouteController::getInstance()->route();
+    RouteController::instance()->route();
 //    RouteController::getInstance();
 }
 catch (RouteException $e){

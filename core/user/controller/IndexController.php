@@ -9,13 +9,13 @@ class IndexController extends BaseController
     protected function inputData(){
 //        $template = $this->render(false, ['name'=>'pasha']);
 
-//        $name = 'pasha';
-//        $content = $this->render('', compact('name'));
-//        $header = $this->render(TEMPLATE . 'header');
-//        $footer = $this->render(TEMPLATE . 'footer');
-//
-//        return compact('header','content',  'footer');
-//        $this->init();
+        $name = 'pasha';
+        $content = $this->render('', compact('name'));
+        $header = $this->render(TEMPLATE . 'header');
+        $footer = $this->render(TEMPLATE . 'footer');
+
+        return compact('header','content',  'footer');
+        $this->init();
 
         exit();
 

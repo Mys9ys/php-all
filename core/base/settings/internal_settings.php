@@ -27,7 +27,12 @@ use core\base\exceptions\RouteException;
 
 function autoloadMainClasses($class_name){
 
+
+
     $class_name = str_replace('\\', '/', $class_name);
+
+    var_dump($class_name);
+    echo '<br>';
 
     if(!@include_once $class_name . '.php'){
         throw new RouteException('Не верное имя файла для подключения - ' . $class_name);
