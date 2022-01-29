@@ -8,5 +8,5 @@ const PATH = '/';
 const HOST = 'localhost';
 const USER = 'root';
 const PASS = '';
-const DB_NAME = 'php_all';
+const DB_NAME = 'php-all';
 
