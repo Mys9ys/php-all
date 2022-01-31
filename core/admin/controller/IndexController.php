@@ -20,7 +20,7 @@ class IndexController extends BaseController
             'condition' => ['AND'],
             'order' => ['fio', 'name'],
             'order_direction' => ['ASC', 'DESC'],
-            'limit'
+            'limit' => '1'
         ]);
 
         exit('admin');
