@@ -7,7 +7,8 @@ use core\base\controller\BaseController;
 
 class IndexController extends BaseController
 {
-    protected function inputData(){
+    protected function inputData()
+    {
 
         $db = Model::instance();
 
@@ -15,8 +16,8 @@ class IndexController extends BaseController
 
         $res = $db->get($table, [
             'fields' => ['id', 'name'],
-            'where'=> ['fio'=> 'smirnova', 'name'=> 'masha'],
-            'operand' => ['=', '<>'],
+            'where' => ['fio' => 'smirnova', 'name' => 'masha'],
+            'operand' => ['=', 'IN'],
             'condition' => ['AND'],
             'order' => ['fio', 'name'],
             'order_direction' => ['ASC', 'DESC'],
