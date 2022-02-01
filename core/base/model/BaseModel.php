@@ -199,18 +199,46 @@ class BaseModel
                         if (is_array($item)) $temp_item = $item;
                         else $temp_item = explode(',', $item);
 
-                        $in_str  = '';
+                        $in_str = '';
 
-                        foreach ($temp_item as $v){
-                            $in_str .= "'" . trim ($v) . "',";
+                        foreach ($temp_item as $v) {
+                            $in_str .= "'" . trim($v) . "',";
                         }
                     }
 
-                    $where .= $table . $key . ' ' .$operand . ' (' . trim($in_str, ',') . ') '. $condition;
+                    $where .= $table . $key . ' ' . $operand . ' (' . trim($in_str, ',') . ') ' . $condition;
 
-                    exit($where);
+                } elseif (strpos($operand, 'LIKE') !== false) {
+
+                    $like_template = explode('%', $operand);
+
+                    foreach ($like_template as $lt_key => $lt) {
+                        if (!$lt) {
+                            if (!$lt_key) {
+                                $item = '%' . $item;
+                            } else {
+                                $item .= '%';
+                            }
+                        }
+                    }
+
+                    $where .= $table . $key . ' like ' . "'" . $item . "' $condition";
+
+
+                } else {
+
+                    if(strpos($item, 'SELECT') === 0){
+                        $where .= $table . $key . $operand . ' (' . $item . ") $condition";
+                    } else {
+                        $where .= $table . $key . $operand . " '" . $item . "' $condition";
+
+                    }
+
                 }
             }
+            $where = substr($where, 0, strrpos($where, $condition));
         }
+
+        return $where;
     }
 }
