@@ -15,16 +15,23 @@ class IndexController extends BaseController
         $table = 'teachers';
         $color = ['r', 'g', 'b'];
 
-        $res = $db->get($table, [
-            'fields' => ['id', 'name'],
-            'where' => ['name' => 'masha, sveta, ivan', 'fio' => "smi'rnova", 'color' => $color, 'arr' => 'SELECT id FROM'],
-            'operand' => ['IN', '%LIKE%', 'IN', '<>'],
-            'condition' => ['AND'],
-            'order' => ['fio', 'name'],
-            'order_direction' => ['DESC'],
-            'limit' => '1',
+        $files['gallery_img'] = ['red', 'green', 'blue'];
+        $files['img'] = 'main.jpg';
 
-        ]);
+        $res = $db->add($table, [
+//            'fields' => ['id', 'name'],
+            'fields' => ['name' => 'olga', 'content'=>'hello'],
+//            'where' => ['name' => 'masha, sveta, ivan', 'fio' => "smi'rnova", 'color' => $color, 'arr' => 'SELECT id FROM'],
+//            'where' => ['name'=>'masha'],
+//            'operand' => ['IN', '%LIKE%', 'IN', '<>'],
+//            'condition' => ['AND'],
+//            'order' => ['fio', 'name'],
+//            'order_direction' => ['DESC'],
+//            'limit' => '1',
+        'except' => ['content'],
+        'files' => $files
+
+        ])[0];
 
         exit('admin');
     }
