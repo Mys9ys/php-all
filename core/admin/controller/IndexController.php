@@ -18,7 +18,8 @@ class IndexController extends BaseController
 
         $files['gallery_img'] = ['red', 'green', 'blue'];
         $files['img'] = 'main.jpg';
-        $_POST['name'] = 'Mys9ys';
+        $_POST['name'] = 'Mys9ysilii';
+        $_POST['id'] = '2';
 
 //        $res = $db->add($table, [
 //            'fields' => ['id', 'name'],
@@ -35,7 +36,11 @@ class IndexController extends BaseController
 
 //        ])[0];
 
-        $res = $db->showColumns($table);
+        $res = $db->edit($table, [
+//           'fields' => ['id'=> 2, 'name' => 'Vasya'],
+//            'files' => $files,
+//            'where' => ['id' => 1]
+        ]);
         print_debug($res);
 
         exit('admin');

@@ -186,9 +186,9 @@ class BaseModel extends BaseModalMethods
 
                 if(!$columns) return false;
 
-                if($columns['id_rows'] && $set['fields'][$columns['id_rows']]){
-                    $where = 'WHERE ' . $columns['id_row'] . '=' . $set['fields'][$columns['id_rows']];
-                    unset($set['fields'][$columns['id_rows']]);
+                if($columns['id_row'] && $set['fields'][$columns['id_row']]){
+                    $where = 'WHERE ' . $columns['id_row'] . '=' . $set['fields'][$columns['id_row']];
+                    unset($set['fields'][$columns['id_row']]);
                 }
             }
         }
@@ -200,7 +200,6 @@ class BaseModel extends BaseModalMethods
         return $this->query($query, 'u');
 
     }
-
 
     final public function showColumns($table){
         $query = "SHOW COLUMNS FROM $table";
