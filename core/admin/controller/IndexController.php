@@ -9,6 +9,7 @@ class IndexController extends BaseController
 {
     protected function inputData()
     {
+        include_once 'lib/functions.php';
 
         $db = Model::instance();
 
@@ -17,10 +18,11 @@ class IndexController extends BaseController
 
         $files['gallery_img'] = ['red', 'green', 'blue'];
         $files['img'] = 'main.jpg';
+        $_POST['name'] = 'Mys9ys';
 
-        $res = $db->add($table, [
+//        $res = $db->add($table, [
 //            'fields' => ['id', 'name'],
-            'fields' => ['name' => 'olga', 'content'=>'hello'],
+//            'fields' => ['name' => 'petr', 'content'=>'hello'],
 //            'where' => ['name' => 'masha, sveta, ivan', 'fio' => "smi'rnova", 'color' => $color, 'arr' => 'SELECT id FROM'],
 //            'where' => ['name'=>'masha'],
 //            'operand' => ['IN', '%LIKE%', 'IN', '<>'],
@@ -28,10 +30,13 @@ class IndexController extends BaseController
 //            'order' => ['fio', 'name'],
 //            'order_direction' => ['DESC'],
 //            'limit' => '1',
-        'except' => ['content'],
-        'files' => $files
+//        'except' => ['content'],
+//        'files' => $files
 
-        ])[0];
+//        ])[0];
+
+        $res = $db->showColumns($table);
+        print_debug($res);
 
         exit('admin');
     }

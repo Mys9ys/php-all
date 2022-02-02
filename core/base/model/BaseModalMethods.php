@@ -221,9 +221,6 @@ abstract class BaseModalMethods
 
     protected function createInsert($fields, $files, $except)
     {
-        if (!$fields) {
-            $fields = $_POST;
-        }
 
         $insert_arr = [];
 
@@ -254,14 +251,13 @@ abstract class BaseModalMethods
 
                 $insert_arr['fields'] .= $row . ',';
 
-                if(is_array($file)) $insert_arr['values'] .= "'" . addslashes(json_encode($file)) . "',";
+                if (is_array($file)) $insert_arr['values'] .= "'" . addslashes(json_encode($file)) . "',";
                 else $insert_arr['values'] .= "'" . addslashes($file) . "',";
 
             }
         }
-        if($insert_arr){
-            foreach ($insert_arr as $key=>$arr) $insert_arr[$key] = rtrim($arr, ',');
-        }
+
+        foreach ($insert_arr as $key => $arr) $insert_arr[$key] = rtrim($arr, ',');
 
         return $insert_arr;
     }
