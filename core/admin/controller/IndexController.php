@@ -36,11 +36,24 @@ class IndexController extends BaseController
 
 //        ])[0];
 
-        $res = $db->edit($table, [
-//           'fields' => ['id'=> 2, 'name' => 'Vasya'],
-//            'files' => $files,
-//            'where' => ['id' => 1]
+//        $res = $db->edit($table, [
+////           'fields' => ['id'=> 2, 'name' => 'Vasya'],
+////            'files' => $files,
+////            'where' => ['id' => 1]
+//        ]);
+
+        $res = $db->delete($table, [
+//            'fields' => ['name', 'img'],
+            'where' => ['id' => 6],
+            'join'=> [
+               [
+                   'table' => 'students',
+                   'on'=> ['student_id', 'id']
+               ]
+            ]
+
         ]);
+
         print_debug($res);
 
         exit('admin');

@@ -149,6 +149,7 @@ abstract class BaseModalMethods
         $fields = '';
         $join = '';
         $where = '';
+        $tables = '';
 
         if ($set['join']) {
             $join_table = $table;
@@ -197,6 +198,7 @@ abstract class BaseModalMethods
                     $join .= '.' . $join_fields[0] . '=' . $key . '.' . $join_fields[1];
 
                     $join_table = $key;
+                    $tables .= ', ' . trim($join_table);
 
                     if ($new_where) {
                         if ($item['where']) {
@@ -217,7 +219,7 @@ abstract class BaseModalMethods
             }
         }
 
-        return compact('fields', 'join', 'where');
+        return compact('fields', 'join', 'where', 'tables');
     }
 
     protected function createInsert($fields, $files, $except)
@@ -260,21 +262,24 @@ abstract class BaseModalMethods
         return $insert_arr;
     }
 
-    protected function createUpdate($fields, $files, $except){
+    protected function createUpdate($fields, $files, $except)
+    {
 
         $update = '';
 
-        if($fields){
+        if ($fields) {
 
-            foreach ($fields as $row=>$value){
+            foreach ($fields as $row => $value) {
 
-                if($except && in_array($row, $except)) continue;
+                if ($except && in_array($row, $except)) continue;
 
                 $update .= $row . '=';
 
-                if(in_array($value, $this->sqlFunc)){
+                if (in_array($value, $this->sqlFunc)) {
                     $update .= $value . ',';
-                } else{
+                } elseif ($value === NULL) {
+                    $update .= "NULL" . ',';
+                } else {
                     $update .= "'" . addslashes($value) . "',";
                 }
             }
