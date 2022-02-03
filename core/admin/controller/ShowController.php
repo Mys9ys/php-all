@@ -6,11 +6,11 @@ class ShowController extends BaseAdmin
 {
 
     protected function inputData(){
-        $this->exactBase();
+        $this->execBase();
 
         $this->createTableData();
 
-        exit();
+        $this->createData();
     }
 
     protected function outputData(){
