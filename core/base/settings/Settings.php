@@ -12,20 +12,24 @@ class Settings
         'admin' => [
             'alias' => 'admin',
             'path' => 'core/admin/controller/',
-            'hrUrl' => false
+            'hrUrl' => false,
+            'routes' => [
+
+            ]
         ],
         'settings' => [
             'path' => 'core/base/settings'
         ],
         'plugins' => [
             'path' => 'core/plugins/',
-            'hrUrl' => false
+            'hrUrl' => false,
+            'dir' => false
         ],
         'user' => [
             'path' => 'core/user/controller/',
             'hrUrl' => true,
             'routes' => [
-                'catalog' => 'site'
+
             ]
         ],
         'default' => [
@@ -34,6 +38,8 @@ class Settings
             'outputMethod' => 'OutputData'
         ]
     ];
+
+    private $defaultTable = 'teachers';
 
     private $templateArr = [
         'text' => ['name', 'phone', 'address'],
