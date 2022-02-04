@@ -20,6 +20,12 @@ trait SingleTon
             return self::$_instance;
         }
 
+        self::$_instance = new self;
+
+        if(method_exists(self::instance() , 'connect')){
+            self::$_instance->connect();
+        }
+
         return self::$_instance = new self;
     }
 }
