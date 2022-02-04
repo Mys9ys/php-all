@@ -93,29 +93,41 @@ abstract class BaseAdmin extends BaseController
             }
 
             if ($arr['fields']) {
-                $fields = Settings::instance()->arrayMergeRecursive($fields, $arr['fields']);
+                if (is_array($arr['fields'])) {
+                    $fields = Settings::instance()->arrayMergeRecursive($fields, $arr['fields']);
+                } else {
+                    $fields[] = $arr['fields'];
+                }
             }
 
-            if($this->columns['parent_id']){
-                if(!in_array('parent_id', $fields)) $fields[] = 'parent_id';
+            if ($this->columns['parent_id']) {
+                if (!in_array('parent_id', $fields)) $fields[] = 'parent_id';
                 $order[] = 'parent_id';
             }
 
-            if($this->columns['menu_position']) $order[] = 'menu_position';
-            elseif($this->columns['date']){
-                if($order) $order_direction = ['ASC', 'DESC'];
+            if ($this->columns['menu_position']) $order[] = 'menu_position';
+            elseif ($this->columns['date']) {
+                if ($order) $order_direction = ['ASC', 'DESC'];
                 else $order_direction[] = ['DESC'];
 
                 $order[] = 'date';
             }
 
             if ($arr['order']) {
-                $order = Settings::instance()->arrayMergeRecursive($order, $arr['order']);
+                if (is_array($arr['order'])) {
+                    $order = Settings::instance()->arrayMergeRecursive($order, $arr['order']);
+                } else {
+                    $order[] = $arr['order'];
+                }
+
             }
             if ($arr['order_direction']) {
-                $order_direction = Settings::instance()->arrayMergeRecursive($order_direction, $arr['order_direction']);
+                if (is_array($arr['order_direction'])) {
+                    $order_direction = Settings::instance()->arrayMergeRecursive($order_direction, $arr['order_direction']);
+                } else {
+                    $order_direction[] = $arr['order_direction'];
+                }
             }
-
 
         } else {
 
@@ -131,8 +143,28 @@ abstract class BaseAdmin extends BaseController
             'order' => $order,
             'order_direction' => $order_direction
         ]);
+    }
 
-        exit;
+    protected function expansion($args = [])
+    {
+
+        $filename = explode('_', $this->table);
+        $className = '';
+
+        foreach ($filename as $item) $className .= ucfirst($item);
+
+        $class = Settings::get('expansion') . $className . 'Expansion';
+
+
+
+        if (is_readable($_SERVER['DOCUMENT_ROOT'] . PATH . $class . '.php')) {
+
+            $class = str_replace('/', '\\', $class);
+
+            $exp = $class::instance();
+
+            $res = $exp->expansion($args);
+        }
 
     }
 }
