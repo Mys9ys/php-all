@@ -39,14 +39,21 @@ class Settings
         ]
     ];
 
+    private $expansion = 'core/admin/expansion/';
+
     private $defaultTable = 'teachers';
+
+    private $projectTables = [
+        'teachers' => ['name' => 'Учителя', 'img' => 'pages.png'],
+        'students' => ['name' => 'Ученики'],
+    ];
 
     private $templateArr = [
         'text' => ['name', 'phone', 'address'],
         'textarea' => ['content', 'keywords']
     ];
 
-    private $expansion = 'core/admin/expansion/';
+
 
 
 

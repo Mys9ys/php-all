@@ -32,7 +32,7 @@ abstract class BaseAdmin extends BaseController
 
         if (!$this->model) $this->model = Model::instance();
         if (!$this->menu) $this->menu = Settings::get('projectTables');
-        if (!$this->adminPath) $this->adminPath = Settings::get('routes')['admin']['alias'] . '/';
+        if (!$this->adminPath) $this->adminPath = PATH . Settings::get('routes')['admin']['alias'] . '/';
 
         $this->sendNoCacheHeaders();
 
@@ -40,8 +40,8 @@ abstract class BaseAdmin extends BaseController
 
     protected function outputData()
     {
-        $this->header = $this->render(ADMIN_TEMPLATE. 'include/header');
-        $this->footer = $this->render(ADMIN_TEMPLATE. 'include/footer');
+        $this->header = $this->render(ADMIN_TEMPLATE . 'include/header');
+        $this->footer = $this->render(ADMIN_TEMPLATE . 'include/footer');
 
         return $this->render(ADMIN_TEMPLATE . 'layout/default');
     }
