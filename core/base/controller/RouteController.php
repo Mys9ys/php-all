@@ -99,11 +99,7 @@ class RouteController extends BaseController
                     }
                 }
             }
-//            echo "<pre>";
-//            var_dump($this);
-//            echo "</pre>";
 
-//            exit();
         } else {
             throw new RouteException('Не корректная директория сайта',1);
         }

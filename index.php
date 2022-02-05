@@ -12,9 +12,7 @@ require_once 'lib/functions.php';
 use core\base\controller\RouteController;
 use core\base\exceptions\DbException;
 use core\base\exceptions\RouteException;
-$arr = [1,2,3];
 
-print_debug($arr);
 try{
     RouteController::instance()->route();
 //    RouteController::getInstance();

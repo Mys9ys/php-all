@@ -17,6 +17,8 @@ abstract class BaseAdmin extends BaseController
     protected $columns;
     protected $data;
 
+    protected $adminPath;
+
     protected $menu;
     protected $title;
 
@@ -30,6 +32,7 @@ abstract class BaseAdmin extends BaseController
 
         if (!$this->model) $this->model = Model::instance();
         if (!$this->menu) $this->menu = Settings::get('projectTables');
+        if (!$this->adminPath) $this->adminPath = Settings::get('routes')['admin']['alias'] . '/';
 
         $this->sendNoCacheHeaders();
 
@@ -37,7 +40,10 @@ abstract class BaseAdmin extends BaseController
 
     protected function outputData()
     {
+        $this->header = $this->render(ADMIN_TEMPLATE. 'include/header');
+        $this->footer = $this->render(ADMIN_TEMPLATE. 'include/footer');
 
+        return $this->render(ADMIN_TEMPLATE . 'layout/default');
     }
 
     protected function sendNoCacheHeaders()
@@ -74,11 +80,11 @@ abstract class BaseAdmin extends BaseController
 
         foreach ($filename as $item) $className .= ucfirst($item);
 
-        if(!$settings){
+        if (!$settings) {
             $path = Settings::get('expansion');
-        } elseif(is_object($settings)){
+        } elseif (is_object($settings)) {
             $path = $settings::get('expansion');
-        } else{
+        } else {
             $path = $settings;
         }
 
@@ -90,7 +96,7 @@ abstract class BaseAdmin extends BaseController
 
             $exp = $class::instance();
 
-            foreach ($this as $name=>$value){
+            foreach ($this as $name => $value) {
                 $exp->$name = $this->$name;
             }
 
@@ -102,7 +108,7 @@ abstract class BaseAdmin extends BaseController
 
             extract($args);
 
-            if(is_readable($file)) return include $file;
+            if (is_readable($file)) return include $file;
 
         }
 
