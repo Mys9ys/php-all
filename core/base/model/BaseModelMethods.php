@@ -2,7 +2,7 @@
 
 namespace core\base\model;
 
-abstract class BaseModalMethods
+abstract class BaseModelMethods
 {
     protected $sqlFunc = ['NOW()'];
 

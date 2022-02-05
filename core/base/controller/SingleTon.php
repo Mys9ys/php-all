@@ -26,6 +26,6 @@ trait SingleTon
             self::$_instance->connect();
         }
 
-        return self::$_instance = new self;
+        return self::$_instance;
     }
 }

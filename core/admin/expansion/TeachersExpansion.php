@@ -10,7 +10,6 @@ class TeachersExpansion
 
     public function expansion($args = [])
     {
-        print_debug([],'tyt');
-        exit();
+        $this->title = 'La la la';
     }
 }

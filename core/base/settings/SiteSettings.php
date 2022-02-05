@@ -17,11 +17,12 @@ class SiteSettings extends Settings
     ];
 
     private $routes = [
-        'admin' => [
-            'name' => 'sudo',
-        ],
+//        'admin' => [
+//            'name' => 'sudo',
+//        ],
     ];
 
+//    private $expansion = 'core/plugin/expansion/';
 
     static public function get($property){
         return self::getInstance()->$property;

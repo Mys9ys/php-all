@@ -2,10 +2,9 @@
 
 namespace core\base\model;
 
-use core\base\controller\SingleTon;
 use core\base\exceptions\DbException;
 
-abstract class BaseModel extends BaseModalMethods
+abstract class BaseModel extends BaseModelMethods
 {
 
     protected $bd;
@@ -19,7 +18,8 @@ abstract class BaseModel extends BaseModalMethods
                 . $this->bd->connect_errno . ' ' . $this->bd->connect_error);
         }
 
-        $this->bd->query('SET NAMES UTF8');
+        $res = $this->bd->query('SET NAMES UTF8');
+
     }
 
     /**
@@ -31,6 +31,7 @@ abstract class BaseModel extends BaseModalMethods
      */
     final public function query($query, $crud = 'r', $return_id = false)
     {
+
 
         $result = $this->bd->query($query);
 

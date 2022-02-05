@@ -66,7 +66,7 @@ abstract class BaseAdmin extends BaseController
         if (!$this->columns) new RouteException('не найдены поля в таблице -' . $this->table, 2);
     }
 
-    protected function expansion($args = [])
+    protected function expansion($args = [], $settings = false)
     {
 
         $filename = explode('_', $this->table);
@@ -74,9 +74,15 @@ abstract class BaseAdmin extends BaseController
 
         foreach ($filename as $item) $className .= ucfirst($item);
 
-        $class = Settings::get('expansion') . $className . 'Expansion';
+        if(!$settings){
+            $path = Settings::get('expansion');
+        } elseif(is_object($settings)){
+            $path = $settings::get('expansion');
+        } else{
+            $path = $settings;
+        }
 
-
+        $class = $path . $className . 'Expansion';
 
         if (is_readable($_SERVER['DOCUMENT_ROOT'] . PATH . $class . '.php')) {
 
@@ -84,8 +90,22 @@ abstract class BaseAdmin extends BaseController
 
             $exp = $class::instance();
 
-            $res = $exp->expansion($args);
+            foreach ($this as $name=>$value){
+                $exp->$name = $this->$name;
+            }
+
+            return $exp->expansion($args);
+
+        } else {
+
+            $file = $_SERVER['DOCUMENT_ROOT'] . PATH . $path . $this->table . '.php';
+
+            extract($args);
+
+            if(is_readable($file)) return include $file;
+
         }
 
+        return false;
     }
 }
