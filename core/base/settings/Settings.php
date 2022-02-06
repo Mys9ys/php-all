@@ -53,6 +53,16 @@ class Settings
         'textarea' => ['content', 'keywords']
     ];
 
+    private $translate = [
+      'name' => ['Название', 'Не более 100 символов']
+    ];
+
+    private $blockNeedle = [
+        'vg-rows' => [],
+        'vg-img' => [],
+        'vg-content' => []
+    ];
+
 
 
 

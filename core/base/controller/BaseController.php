@@ -25,6 +25,8 @@ abstract class BaseController
     protected $styles;
     protected $scripts;
 
+    protected $userId;
+
     /**
      * @throws \ReflectionException
      */
