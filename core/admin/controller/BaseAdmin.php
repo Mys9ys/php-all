@@ -16,6 +16,7 @@ abstract class BaseAdmin extends BaseController
     protected $table;
     protected $columns;
     protected $data;
+    protected $foreignData;
 
     protected $adminPath;
 
@@ -130,7 +131,7 @@ abstract class BaseAdmin extends BaseController
         return false;
     }
 
-    protected function CreateOutputData($settings = false)
+    protected function createOutputData($settings = false)
     {
         if (!$settings) $settings = Settings::instance();
 
