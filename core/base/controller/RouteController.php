@@ -15,7 +15,9 @@ class RouteController extends BaseController
     {
         $address_str = $_SERVER['REQUEST_URI'];
 
-
+        if ($_SERVER['QUERY_STRING']) {
+            $address_str = substr($address_str, 0, strpos($address_str, $_SERVER['QUERY_STRING']) -1);
+        }
 
         $path = substr($_SERVER['PHP_SELF'], 0, strpos($_SERVER['PHP_SELF'], 'index.php'));
 
@@ -29,7 +31,7 @@ class RouteController extends BaseController
 
             $this->routes = Settings::get('routes');
 
-            if (!$this->routes) throw new RouteException('Отсутствуют маршруты в базовых настройках',1);
+            if (!$this->routes) throw new RouteException('Отсутствуют маршруты в базовых настройках', 1);
 
             $url = explode('/', substr($address_str, strlen(PATH)));
 
@@ -101,7 +103,7 @@ class RouteController extends BaseController
             }
 
         } else {
-            throw new RouteException('Не корректная директория сайта',1);
+            throw new RouteException('Не корректная директория сайта', 1);
         }
 
     }
