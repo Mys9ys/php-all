@@ -135,7 +135,7 @@ abstract class BaseAdmin extends BaseController
     {
         if (!$settings) $settings = Settings::instance();
 
-        $blocks = Settings::get('blockNeedle');
+        $blocks = $settings::get('blockNeedle');
         $this->translate = $settings::get('translate');
 
         if (!$blocks || !is_array($blocks)) {
@@ -150,7 +150,7 @@ abstract class BaseAdmin extends BaseController
             return;
         }
 
-        $default = array_keys($blocks[0]);
+        $default = array_keys($blocks)[0];
 
         foreach ($this->columns as $name => $item){
             if($name === 'id_row') continue;
