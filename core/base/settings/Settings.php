@@ -43,7 +43,7 @@ class Settings
 
     private $defaultTable = 'teachers';
 
-    private $formTemplates = PATH . 'core/admin/view/include/form_templates';
+    private $formTemplates = PATH . 'core/admin/view/include/form_templates/';
 
     private $projectTables = [
         'teachers' => ['name' => 'Учителя', 'img' => 'pages.png'],
@@ -51,8 +51,11 @@ class Settings
     ];
 
     private $templateArr = [
-        'text' => ['name', 'phone', 'address'],
-        'textarea' => ['content', 'keywords']
+        'text' => ['name'],
+        'textarea' => ['content'],
+        'radio' => ['visible'],
+        'select' => ['menu_position', 'parent_id'],
+        'img' => ['img']
     ];
 
     private $translate = [
@@ -71,8 +74,8 @@ class Settings
 
     private $blockNeedle = [
         'vg-rows' => [],
-        'vg-img' => [],
-        'vg-content' => []
+        'vg-img' => ['img'],
+        'vg-content' => ['content']
     ];
 
 
