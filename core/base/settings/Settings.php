@@ -55,11 +55,13 @@ class Settings
         'textarea' => ['content'],
         'radio' => ['visible'],
         'select' => ['menu_position', 'parent_id'],
-        'img' => ['img']
+        'img' => ['img'],
+        'gallery_img' => ['gallery_img']
     ];
 
     private $translate = [
-      'name' => ['Название', 'Не более 100 символов']
+      'name' => ['Название', 'Не более 100 символов'],
+        'content' => ['Описание', 'Не более 100 символов']
     ];
 
     private $radio = [
@@ -74,7 +76,7 @@ class Settings
 
     private $blockNeedle = [
         'vg-rows' => [],
-        'vg-img' => ['img'],
+        'vg-img' => ['img', 'gallery_img'],
         'vg-content' => ['content']
     ];
 
