@@ -173,13 +173,13 @@ abstract class BaseModelMethods
 
                     switch (2) {
 
-                        case count($item['on']['fields']) :
+                        case (is_array($item['on']['fields']) && count($item['on']['fields'])) :
 
                             $join_fields = $item['on']['fields'];
 
                             break;
 
-                        case count($item['on']) :
+                        case (is_array($item['on']) && count($item['on'])) :
 
                             $join_fields = $item['on'];
 

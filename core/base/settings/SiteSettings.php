@@ -7,7 +7,9 @@ use core\base\settings\Settings;
 
 class SiteSettings extends Settings
 {
-    use SingleTon;
+    use SingleTon {
+        instance as traitInstance;
+    }
 
     private $baseSettings;
 
@@ -25,15 +27,15 @@ class SiteSettings extends Settings
 //    private $expansion = 'core/plugin/expansion/';
 
     static public function get($property){
-        return self::getInstance()->$property;
+        return self::instance()->$property;
     }
 
-    static private function getInstance(){
+    static private function instance(){
         if(self::$_instance instanceof self){
             return self::$_instance;
         }
 
-        self::instance()->baseSettings = Settings::instance();
+        self::traitInstance()->baseSettings = Settings::instance();
         $baseProperties = self::$_instance->baseSettings->clueProperties(get_class());
         self::$_instance->setProperty($baseProperties);
 
