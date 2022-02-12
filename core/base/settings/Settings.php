@@ -80,6 +80,15 @@ class Settings
         'vg-content' => ['content']
     ];
 
+    private $validation = [
+        'name' => ['empty' => true, 'trim' => true],
+        'price' => ['int'=> true],
+        'login' => ['empty' => true, 'trim' => true],
+        'password' => ['crypt' => true],
+        'keywords' => ['count'=>70, 'trim'=>true],
+        'description' => ['count' => 160, 'trim'=>true],
+    ];
+
 
 
 

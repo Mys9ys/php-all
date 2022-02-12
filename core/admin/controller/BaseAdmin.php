@@ -42,8 +42,8 @@ abstract class BaseAdmin extends BaseController
         if (!$this->menu) $this->menu = Settings::get('projectTables');
         if (!$this->adminPath) $this->adminPath = PATH . Settings::get('routes')['admin']['alias'] . '/';
 
-        if(!$this->templateArr) $this->templateArr = Settings::get('templateArr');
-        if(!$this->formTemplates) $this->formTemplates = Settings::get('formTemplates');
+        if (!$this->templateArr) $this->templateArr = Settings::get('templateArr');
+        if (!$this->formTemplates) $this->formTemplates = Settings::get('formTemplates');
 
         $this->sendNoCacheHeaders();
 
@@ -159,40 +159,103 @@ abstract class BaseAdmin extends BaseController
 
         $default = array_keys($blocks)[0];
 
-        foreach ($this->columns as $name => $item){
-            if($name === 'id_row') continue;
+        foreach ($this->columns as $name => $item) {
+            if ($name === 'id_row') continue;
 
             $insert = false;
 
-            foreach ($blocks as $block => $value){
+            foreach ($blocks as $block => $value) {
 
-                if(!array_key_exists($block , $this->blocks)) $this->blocks[$block] = [];
+                if (!array_key_exists($block, $this->blocks)) $this->blocks[$block] = [];
 
-                if(in_array($name, $value)){
+                if (in_array($name, $value)) {
                     $this->blocks[$block][] = $name;
                     $insert = true;
                     break;
                 }
             }
-            if(!$insert) $this->blocks[$default][] = $name;
-            if(!$this->translate[$name]) $this->translate[$name][] = $name;
+            if (!$insert) $this->blocks[$default][] = $name;
+            if (!$this->translate[$name]) $this->translate[$name][] = $name;
 
         }
 
         return;
     }
 
-    protected function createRadio($settings = false) {
-        if(!$settings) $settings = Settings::instance();
+    protected function createRadio($settings = false)
+    {
+        if (!$settings) $settings = Settings::instance();
 
         $radio = $settings::get('radio');
 
-        if($radio){
-            foreach($this->columns as $name => $item){
-                if($radio[$name]){
+        if ($radio) {
+            foreach ($this->columns as $name => $item) {
+                if ($radio[$name]) {
                     $this->foreignData[$name] = $radio[$name];
                 }
             }
         }
+    }
+
+    protected function checkPost($settings = false)
+    {
+
+        if ($this->isPost()) {
+            $this->clearPostFields($settings);
+            $this->table = $this->clearStr($_POST['table']);
+            unset($_POST['table']);
+
+            if ($this->table) {
+                $this->createTableData($settings);
+                $this->editData();
+            }
+        }
+
+    }
+
+    protected function clearPostFields($settings, &$arr = [])
+    {
+        if (!$arr) $arr = &$_POST;
+        if (!$settings) $settings = Settings::instance();
+
+        $id = $_POST[$this->columns['id_row']] ?: false;
+
+        $validate = $settings::get('validation');
+        if (!$this->translate) $this->translate = $settings::get('translate');
+
+        foreach ($arr as $key => $item) {
+
+            if(is_array($item)){
+                $this->clearPostFields($settings, $item);
+
+            } else {
+                if(is_numeric($item)){
+                    $arr[$key] = $this->clearNum($item);
+                }
+
+                if($validate){
+
+                    if($validate[$key]){
+
+                        if($this->translate[$key]){
+                            $answer = $this->translate[$key][0];
+                        } else {
+                            $answer = $key;
+                        }
+
+                        if($validate[$key]['crypt']){
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    protected function editData()
+    {
+
     }
 }
