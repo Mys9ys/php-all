@@ -15,11 +15,6 @@
                         <?=$item['name']?>
                     </option>
                 <?php endforeach;?>
-
-
-                <option value="2">
-                    2
-                </option>
             </select>
         </div>
     </div>
