@@ -60,16 +60,16 @@ class Settings
     ];
 
     private $translate = [
-      'name' => ['Название', 'Не более 100 символов'],
+        'name' => ['Название', 'Не более 100 символов'],
         'content' => ['Описание', 'Не более 100 символов']
     ];
 
     private $radio = [
-        'visible' => ['Нет', 'Да', 'default' => 'Да' ]
+        'visible' => ['Нет', 'Да', 'default' => 'Да']
     ];
 
     private $rootItems = [
-        'name' =>'Корневая',
+        'name' => 'Корневая',
         'tables' => ['teachers'],
 
     ];
@@ -82,22 +82,18 @@ class Settings
 
     private $validation = [
         'name' => ['empty' => true, 'trim' => true],
-        'price' => ['int'=> true],
+        'price' => ['int' => true],
         'login' => ['empty' => true, 'trim' => true],
-        'password' => ['crypt' => true],
-        'keywords' => ['count'=>70, 'trim'=>true],
-        'description' => ['count' => 160, 'trim'=>true],
+        'password' => ['crypt' => true, 'empty' => true],
+        'keywords' => ['count' => 70, 'trim' => true],
+        'description' => ['count' => 160, 'trim' => true],
     ];
-
-
-
 
 
     static public function get($property)
     {
         return self::instance()->$property;
     }
-
 
 
     public function clueProperties($class)
@@ -113,23 +109,24 @@ class Settings
                 continue;
             }
 
-            if(!$property) $baseProperties[$name] = $this->$name;
+            if (!$property) $baseProperties[$name] = $this->$name;
         }
 
         return $baseProperties;
     }
 
-    public function arrayMergeRecursive(){
+    public function arrayMergeRecursive()
+    {
         $arrays = func_get_args();
         $base = array_shift($arrays);
 
-        foreach ($arrays as $arr){
-            foreach ($arr as $key => $value){
-                if(is_array($value) && is_array($base[$key])){
+        foreach ($arrays as $arr) {
+            foreach ($arr as $key => $value) {
+                if (is_array($value) && is_array($base[$key])) {
                     $base[$key] = $this->arrayMergeRecursive($base[$key], $value);
                 } else {
-                    if(is_int($key)){
-                        if(!in_array($value, $base)) array_push($base, $value);
+                    if (is_int($key)) {
+                        if (!in_array($value, $base)) array_push($base, $value);
                         continue;
                     }
                     $base[$key] = $value;
