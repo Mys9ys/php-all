@@ -23,6 +23,8 @@ abstract class BaseAdmin extends BaseController
     protected $menu;
     protected $title;
 
+    protected $fileArray;
+
     protected $messages;
 
     protected $translate;
@@ -30,7 +32,6 @@ abstract class BaseAdmin extends BaseController
 
     protected $templateArr;
     protected $formTemplates;
-
     protected $noDelete;
 
     protected function inputData()
@@ -218,20 +219,21 @@ abstract class BaseAdmin extends BaseController
 
     }
 
-    protected function addSessionData($arr =[])
+    protected function addSessionData($arr = [])
     {
-        if(!$arr) $arr = $_POST;
+        if (!$arr) $arr = $_POST;
 
-        foreach ($arr as $key=>$item){
+        foreach ($arr as $key => $item) {
             $_SESSION['res'][$key] = $item;
         }
 
         $this->redirect();
     }
 
-    protected function countChar($str, $counter, $answer, $arr = []){
+    protected function countChar($str, $counter, $answer, $arr = [])
+    {
 
-        if(mb_strlen($str) > $counter){
+        if (mb_strlen($str) > $counter) {
             $str_res = mb_str_replace('$1', $answer, $this->messages['count']);
             $str_res = mb_str_replace('$2', $counter, $str_res);
 
@@ -308,7 +310,90 @@ abstract class BaseAdmin extends BaseController
         return true;
     }
 
-    protected function editData()
+    protected function editData($returnId = false)
+    {
+        $id = false;
+        $method = 'add';
+
+        if ($_POST[$this->columns['id_row']]) {
+            $id = is_numeric($_POST[$this->columns['id_row']])
+                ? $this->clearNum($_POST[$this->columns['id_row']])
+                : $this->clearStr($_POST[$this->columns['id_row']]);
+
+            if ($id) {
+                $where = [$this->columns['id_row'] => $id];
+                $method = 'edit';
+            }
+        }
+        foreach ($this->columns as $key => $item) {
+            if ($key = 'id_row') continue;
+            if ($item['Type'] === 'date' || $item['Type'] === 'datetime') {
+                !$_POST[$key] && $_POST[$key] = 'NOW()';
+            }
+        }
+
+        $this->createFile();
+
+        $this->createAlias($id);
+
+        $this->updateMenuPosition();
+
+        $except = $this->checkExceptFields();
+
+        $res_id = $this->model->$method($this->table, [
+            'files' => $this->fileArray,
+            'where' => $where,
+            'return_id' => true,
+            'except' => $except
+        ]);
+
+        if (!$id && $method === 'add') {
+            $_POST[$this->columns['id_row']] = $res_id;
+            $answerSuccess = $this->messages['addSuccess'];
+            $answerFail = $this->messages['addFail'];
+        } else {
+            $answerSuccess = $this->messages['editSuccess'];
+            $answerFail = $this->messages['editFail'];
+        }
+
+        $this->expansion(get_defined_vars());
+
+        $result = $this->checkAlias($_POST[$this->columns['id_row']]);
+
+        if ($res_id) {
+            $_SESSION['res']['answer'] = '<div class="success">' . $answerSuccess . '</div>';
+
+            if (!$returnId) $this->redirect();
+
+            return $_POST[$this->columns['id_row']];
+        } else {
+            $_SESSION['res']['answer'] = '<div class="error">' . $answerFail . '</div>';
+
+            if (!$returnId) $this->redirect();
+        }
+    }
+
+    protected function checkExceptFields()
+    {
+
+    }
+
+    protected function createAlias($id = false)
+    {
+
+    }
+
+    protected function createFile()
+    {
+
+    }
+
+    protected function updateMenuPosition()
+    {
+
+    }
+
+    protected function checkAlias($id)
     {
 
     }
