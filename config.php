@@ -2,7 +2,7 @@
 
 defined('VG_ACCESS') or die('Access denied');
 
-const SITE_URL = '';
+const SITE_URL = 'https://yandex.ru';
 const PATH = '/';
 
 const HOST = 'localhost';
