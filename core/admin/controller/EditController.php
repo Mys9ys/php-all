@@ -4,24 +4,26 @@ namespace core\admin\controller;
 
 class EditController extends BaseAdmin
 {
-    protected function inputData(){
+    protected function inputData()
+    {
 
-        if(!$this->userId) $this->execBase();
+        if (!$this->userId) $this->execBase();
 
     }
 
-    protected function checkOldAlias($id){
+    protected function checkOldAlias($id)
+    {
 
         $tables = $this->model->showTables();
 
-        if(in_array('old_alias', $tables)){
+        if (in_array('old_alias', $tables)) {
 
             $old_alias = $this->table->get($this->table, [
-               'fields' => ['alias'],
-               'where' =>  [$this->columns['id_row'] => $id]
+                'fields' => ['alias'],
+                'where' => [$this->columns['id_row'] => $id]
             ])[0]['alias'];
 
-            if($old_alias && $old_alias !== $_POST['alias']){
+            if ($old_alias && $old_alias !== $_POST['alias']) {
 
                 $this->model->delete('old_alias', [
                     'where' => ['alias' => $old_alias, 'table_name' => $this->table]
