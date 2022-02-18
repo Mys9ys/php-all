@@ -13,7 +13,7 @@ class CreateSitemapController extends BaseAdmin
     protected $parsingLogFile = 'parsing_log.txt';
     protected $fileArr = ['jpg', 'png', 'jpeg', 'gif', 'xls', 'xlsx', 'pdf', 'mp4', 'mp3'];
     protected $filterArr = [
-        'url' => [],
+        'url' => ['order'],
         'get' => []
     ];
 
@@ -130,6 +130,28 @@ class CreateSitemapController extends BaseAdmin
 
     protected function filter($link)
     {
+        if ($this->filterArr) {
+
+            foreach ($this->filterArr as $type => $values) {
+
+                if ($values) {
+
+                    foreach ($values as $item) {
+
+                        $item = str_replace('/', '\/', addslashes($item));
+
+                        if ($type === 'url') {
+                            if (preg_match('/' . $item . '.*[\?|$]/ui', $link)) return false;
+                        }
+
+                        if ($type === 'get') {
+                            if (preg_match('/(\?|&amp;|=|&)' . $item . '(=|&amp;|&|$)/ui', $link))
+                                return false;
+                        }
+                    }
+                }
+            }
+        }
         return true;
     }
 
