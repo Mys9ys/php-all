@@ -14,7 +14,7 @@ class CreateSitemapController extends BaseAdmin
     protected $fileArr = ['jpg', 'png', 'jpeg', 'gif', 'xls', 'xlsx', 'pdf', 'mp4', 'mp3'];
     protected $filterArr = [
         'url' => ['order'],
-        'get' => []
+        'get' => ['Masha']
     ];
 
     protected function inputData()
@@ -27,13 +27,16 @@ class CreateSitemapController extends BaseAdmin
             $this->redirect();
         }
 
+        if (!$this->userId) $this->execBase();
+
+        if(!$this->checkParsingTable()) return true;
+
         set_time_limit(0);
 
         if (file_exists($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/' . $this->parsingLogFile))
             @unlink($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/' . $this->parsingLogFile);
 
         $this->parsing(SITE_URL);
-
 
         $this->createSitemap();
 
@@ -69,7 +72,7 @@ class CreateSitemapController extends BaseAdmin
             return;
         }
 
-        if (!preg_match('/HTTP\/\d\.?\d?\s+20/ui', $out)) {
+        if (!preg_match('/HTTP\/\d\.?\d?\s+20\d/ui', $out)) {
 
             $this->writeLog('Не корректная ссылка при парсинге -' . $url, $this->parsingLogFile);
 
@@ -98,7 +101,7 @@ class CreateSitemapController extends BaseAdmin
                         $ext = addslashes($ext);
                         $ext = str_replace('.', '\.', $ext);
 
-                        if (preg_match('/' . $ext . '\s*?$/ui', $link)) {
+                        if (preg_match('/' . $ext . '\s*?$|\?[^\/]/ui', $link)) {
 
                             continue 2;
 
@@ -132,6 +135,7 @@ class CreateSitemapController extends BaseAdmin
 
     protected function filter($link)
     {
+
         if ($this->filterArr) {
 
             foreach ($this->filterArr as $type => $values) {
@@ -143,7 +147,7 @@ class CreateSitemapController extends BaseAdmin
                         $item = str_replace('/', '\/', addslashes($item));
 
                         if ($type === 'url') {
-                            if (preg_match('/' . $item . '.*[\?|$]/ui', $link)) return false;
+                            if (preg_match('/^[^\?]*' . $item . '/ui', $link)) return false;
                         }
 
                         if ($type === 'get') {
@@ -154,6 +158,25 @@ class CreateSitemapController extends BaseAdmin
                 }
             }
         }
+        return true;
+    }
+
+    protected function checkParsingTable()
+    {
+
+        $tables = $this->model->showTables();
+
+        if (!in_array('parsing_data', $tables)) {
+
+            $query = 'CREATE TABLE parsing_data (all_links text, temp_links text)';
+
+            if (!$this->model->query($query, 'c') ||
+                !$this->model->add('parsing_data', ['fields' => ['all_links' => '', 'temp_links' => '']])
+            ) {
+                return false;
+            }
+        }
+
         return true;
     }
 
