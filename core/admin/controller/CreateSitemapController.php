@@ -25,20 +25,22 @@ class CreateSitemapController extends BaseAdmin
             $this->writeLog('Отсутствует библиотека CURL');
             $_SESSION['res']['answer'] = '<div class="error">Отсутствует библиотека CURL</div>';
             $this->redirect();
-
-            set_time_limit(0);
-
-            if (file_exists($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/' . $this->parsingLogFile))
-                @unlink($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/' . $this->parsingLogFile);
-
-            $this->parsing(SITE_URL);
-
-            $this->createSitemap();
-
-            !$_SESSION['res']['answer'] && $_SESSION['res']['answer'] = '<div class="success">Sitemap is created</div>';
-
-            $this->redirect();
         }
+
+        set_time_limit(0);
+
+        if (file_exists($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/' . $this->parsingLogFile))
+            @unlink($_SERVER['DOCUMENT_ROOT'] . PATH . 'log/' . $this->parsingLogFile);
+
+        $this->parsing(SITE_URL);
+
+
+        $this->createSitemap();
+
+        !$_SESSION['res']['answer'] && $_SESSION['res']['answer'] = '<div class="success">Sitemap is created</div>';
+
+        $this->redirect();
+
 
     }
 
