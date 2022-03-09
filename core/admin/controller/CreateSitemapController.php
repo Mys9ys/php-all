@@ -17,7 +17,7 @@ class CreateSitemapController extends BaseAdmin
     protected $parsingLogFile = 'parsing_log.txt';
     protected $fileArr = ['jpg', 'png', 'jpeg', 'gif', 'xls', 'xlsx', 'pdf', 'mp4', 'mp3'];
     protected $filterArr = [
-        'url' => [],
+        'url' => ['order', 'page'],
         'get' => []
     ];
 
