@@ -14,6 +14,8 @@ use core\base\controller\RouteController;
 use core\base\exceptions\DbException;
 use core\base\exceptions\RouteException;
 
+if($_POST) exit('yes');
+
 try{
     BaseRoute::routeDirection();
 //    RouteController::getInstance();
