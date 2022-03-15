@@ -21,8 +21,10 @@ class CreateSitemapController extends BaseAdmin
         'get' => []
     ];
 
-    protected function inputData($links_counter = 1)
+    public function inputData($links_counter = 1, $redirect = true)
     {
+
+        $links_counter = $this->clearNum($links_counter);
 
         if (!function_exists('curl_init')) {
 
@@ -117,9 +119,17 @@ class CreateSitemapController extends BaseAdmin
 
         $this->createSitemap();
 
-        !$_SESSION['res']['answer'] && $_SESSION['res']['answer'] = '<div class="success">Sitemap is created</div>';
+       if($redirect){
 
-        $this->redirect();
+           !$_SESSION['res']['answer'] && $_SESSION['res']['answer'] = '<div class="success">Sitemap is created</div>';
+
+           $this->redirect();
+
+       } else {
+
+           $this->cancel(1, 'Sitemap is created! ' . count($this->all_links) . ' links', '', true);
+
+       }
 
     }
 
@@ -190,7 +200,7 @@ class CreateSitemapController extends BaseAdmin
 
             if (!preg_match('/Content-Type:\s+text\/html/ui', $result[$i])) {
 
-                $this->cancel(0, 'Incorrect content-type' . $url);
+                $this->cancel(0, 'Incorrect content-type ' . $url);
 
                 continue;
 
@@ -198,7 +208,7 @@ class CreateSitemapController extends BaseAdmin
 
             if (!preg_match('/HTTP\/\d\.?\d?\s+20\d/ui', $result[$i])) {
 
-                $this->cancel(0, 'Incorrect server code' . $url);
+                $this->cancel(0, 'Incorrect server code ' . $url);
 
                 continue;
 
