@@ -35,7 +35,7 @@ class CreateSitemapController extends BaseAdmin
 
         if (!$this->checkParsingTable()) {
 
-            $this->cancel(0, 'Tou have problem with database table parsing_data', '', true);
+            $this->cancel(0, 'You have problem with database table parsing_data', '', true);
         }
 
         set_time_limit(0);
@@ -110,7 +110,7 @@ class CreateSitemapController extends BaseAdmin
 
             foreach ($this->all_links as $key => $link){
 
-                if(!$this->filter(($link))) unset($this->all_links[$key]);
+                if(!$this->filter($link)) unset($this->all_links[$key]);
 
             }
 
@@ -133,7 +133,7 @@ class CreateSitemapController extends BaseAdmin
 
     }
 
-    protected function parsing($urls, $index = 0)
+    protected function parsing($urls)
     {
 
         if (!$urls) return;
