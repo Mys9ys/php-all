@@ -9,8 +9,6 @@ class AjaxController extends BaseAjax
 
     public function ajax(){
 
-        var_dump($this->data);
-
         if(isset($this->data['ajax'])){
 
             switch ($this->data['ajax']){
