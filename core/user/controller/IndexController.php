@@ -6,6 +6,8 @@ use core\base\controller\BaseController;
 
 class IndexController extends BaseController
 {
+    protected $name;
+
     protected function inputData(){
 //        $template = $this->render(false, ['name'=>'pasha']);
 
@@ -16,8 +18,13 @@ class IndexController extends BaseController
 //
 //        return compact('header','content',  'footer');
 //        $this->init();
+
+        $str = '1234567890';
+
+        $en_str = \core\base\model\Crypt::instance()->encrypt($str);
+        $dec_str = \core\base\model\Crypt::instance()->decrypt($en_str);
 //
-//        exit();
+        exit();
 
     }
 

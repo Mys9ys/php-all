@@ -116,9 +116,9 @@ class CreateSitemapController extends BaseAdmin
 
         }
 
-//        $this->model->edit('parsing_data', [
-//            'fields' => $table_rows
-//        ]);
+        $this->model->edit('parsing_data', [
+            'fields' => $table_rows
+        ]);
 
 
         if($this->all_links){
@@ -226,7 +226,6 @@ class CreateSitemapController extends BaseAdmin
             if (!preg_match('/HTTP\/\d\.?\d?\s+20\d/ui', $result[$i])) {
 
                 $this->bad_links[] = $url;
-
 
                 $this->cancel(0, 'Incorrect server code ' . $url);
 
