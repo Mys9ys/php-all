@@ -19,10 +19,15 @@ class IndexController extends BaseController
 //        return compact('header','content',  'footer');
 //        $this->init();
 
-        $str = '1234567890';
+        $str = '1234abcd';
 
         $en_str = \core\base\model\Crypt::instance()->encrypt($str);
+
+        print_debug($en_str);
+
         $dec_str = \core\base\model\Crypt::instance()->decrypt($en_str);
+
+        print_debug($dec_str);
 //
         exit();
 
