@@ -2,6 +2,7 @@
 
 namespace core\user\controller;
 
+use core\admin\model\Model;
 use core\base\controller\BaseController;
 
 class IndexController extends BaseController
@@ -19,17 +20,35 @@ class IndexController extends BaseController
 //        return compact('header','content',  'footer');
 //        $this->init();
 
-        $str = '1234abcd';
-
-        $en_str = \core\base\model\Crypt::instance()->encrypt($str);
-
-        print_debug($en_str);
-
-        $dec_str = \core\base\model\Crypt::instance()->decrypt($en_str);
-
-        print_debug($dec_str);
+//        $str = '1234abcd';
 //
-        exit();
+//        $en_str = \core\base\model\Crypt::instance()->encrypt($str);
+//
+//        print_debug($en_str);
+//
+//        $dec_str = \core\base\model\Crypt::instance()->decrypt($en_str);
+//
+//        print_debug($dec_str);
+//
+//        exit();
+
+        $model = Model::instance();
+
+        $res = $model->get('teachers', [
+            'where' => ['id' => '1,2'],
+            'operand' => ['IN'],
+            'join' => [
+                'stud_teach' => ['on' => ['id', 'teachers']],
+                'students' => [
+                    'fields' => ['id as student_id', 'name as student_name'],
+                    'on' => ['students', 'id']
+                ]
+            ]
+        ]);
+
+        print_debug($res);
+
+
 
     }
 
