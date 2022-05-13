@@ -46,7 +46,7 @@ class IndexController extends BaseController
             ]
         ]);
 
-        print_debug($res);
+//        print_debug($res);
 
 
 

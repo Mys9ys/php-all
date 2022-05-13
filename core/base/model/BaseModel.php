@@ -199,7 +199,7 @@ abstract class BaseModel extends BaseModelMethods
 
     }
 
-    public function delete($table, $set)
+    public function delete($table, $set = [])
     {
 
         $table = trim($table);
