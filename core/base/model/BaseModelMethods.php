@@ -6,7 +6,9 @@ abstract class BaseModelMethods
 {
     protected $sqlFunc = ['NOW()'];
 
-    protected function createFields($set, $table = false)
+    protected $tableRows;
+
+    protected function createFields($set, $table = false, $join)
     {
         $set['fields'] = (is_array($set['fields']) && !empty($set['fields']))
             ? $set['fields'] : ['*'];
@@ -153,7 +155,7 @@ abstract class BaseModelMethods
         $fields = '';
         $join = '';
         $where = '';
-        $tables = '';
+
 
         if ($set['join']) {
             $join_table = $table;
@@ -202,7 +204,7 @@ abstract class BaseModelMethods
                     $join .= '.' . $join_fields[0] . '=' . $key . '.' . $join_fields[1];
 
                     $join_table = $key;
-                    $tables .= ', ' . trim($join_table);
+
 
                     if ($new_where) {
                         if ($item['where']) {
@@ -215,7 +217,7 @@ abstract class BaseModelMethods
                         $group_condition = $item['group_condition'] ? strtoupper($item['group_condition']) : 'AND';
                     }
 
-                    $fields .= $this->createFields($item, $key);
+                    $fields .= $this->createFields($item, $key, $set['join_structure']);
 
                     $where .= $this->createWhere($item, $key, $group_condition);
 
@@ -223,7 +225,7 @@ abstract class BaseModelMethods
             }
         }
 
-        return compact('fields', 'join', 'where', 'tables');
+        return compact('fields', 'join', 'where');
     }
 
     protected function createInsert($fields, $files, $except)
@@ -357,6 +359,12 @@ abstract class BaseModelMethods
         }
 
         return rtrim($update, ',');
+    }
+
+    protected function joinStructure($res, $table){
+
+
+
     }
 
 }
