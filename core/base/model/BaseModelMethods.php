@@ -66,7 +66,7 @@ abstract class BaseModelMethods
 
                     } else {
 
-                        $fields .= $concat_table . $field;
+                        $fields .= $concat_table . $field; 
 
                     }
 
