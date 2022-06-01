@@ -10,6 +10,7 @@ abstract class BaseModelMethods
 
     protected function createFields($set, $table = false, $join = false)
     {
+
         $fields = '';
 
         $join_structure = false;
@@ -66,13 +67,29 @@ abstract class BaseModelMethods
 
                     } else {
 
-                        $fields .= $concat_table . $field;
+                        $fields .= $concat_table . $field . ',';
 
                     }
 
                 }
 
             }
+
+            if(!$id_field && $join_structure){
+
+                if($join){
+
+                    $fields .= $concat_table . $this->tableRows[$table]['id_row'] . ' as TABLE' . $table . 'TABLE_' . $this->tableRows[$table]['id_row'] . ',';
+
+                } else {
+
+                    $fields .= $concat_table . $this->tableRows[$table]['id_row'] . ',';
+
+                }
+
+            }
+
+            return $fields;
 
         }
     }
