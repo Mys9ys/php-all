@@ -247,7 +247,7 @@ abstract class BaseModel extends BaseModelMethods
 
     final public function showColumns($table)
     {
-        if(!isset($this->tableRows[$table]) || $this->tableRows[$table]) {
+        if(!isset($this->tableRows[$table]) || !$this->tableRows[$table]) {
 
             $query = "SHOW COLUMNS FROM $table";
             $res = $this->query($query);
