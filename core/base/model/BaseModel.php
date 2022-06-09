@@ -279,8 +279,6 @@ abstract class BaseModel extends BaseModelMethods
 
         }
 
-
-
         return $this->tableRows[$table];
     }
 

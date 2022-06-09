@@ -25,9 +25,9 @@ abstract class BaseModelMethods
 
         }
 
-        $concat_table = $table && !$set['concat'] ? $table . '.' : '';
+        $concat_table = ($table && !$set['concat']) ? $table . '.' : '';
 
-        if (!isset($set['fields']) || !is_array($set['fields']) || !$set['fields']) {
+        if (!isset($set['field']) || !is_array($set['fields']) || !$set['fields']) {
 
             if (!$join) {
 
@@ -97,9 +97,9 @@ abstract class BaseModelMethods
 
             }
 
-            return $fields;
-
         }
+
+        return $fields;
     }
 
     protected function createOrder($set, $table = false)
@@ -234,8 +234,8 @@ abstract class BaseModelMethods
         $join = '';
         $where = '';
 
-
         if ($set['join']) {
+
             $join_table = $table;
 
             foreach ($set['join'] as $key => $item) {
@@ -282,7 +282,6 @@ abstract class BaseModelMethods
                     $join .= '.' . $join_fields[0] . '=' . $key . '.' . $join_fields[1];
 
                     $join_table = $key;
-
 
                     if ($new_where) {
                         if ($item['where']) {

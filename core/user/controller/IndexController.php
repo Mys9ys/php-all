@@ -35,7 +35,7 @@ class IndexController extends BaseController
         $model = Model::instance();
 
         $res = $model->get('teachers', [
-            'where' => ['id' => '1,2'],
+            'where' => ['id' => '6,7'],
             'operand' => ['IN'],
             'join' => [
                 'stud_teach' => ['on' => ['id', 'teachers']],
@@ -44,7 +44,7 @@ class IndexController extends BaseController
                     'on' => ['students', 'id']
                 ]
             ],
-//            'join_structure' => true
+            'join_structure' => true
         ]);
 
         print_debug($res);
